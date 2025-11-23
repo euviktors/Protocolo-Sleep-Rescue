@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocolo Resgate - O Fim das Noites em Claro</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- RemixIcon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --bg-dark: #0f172a;
+            /* Deep Blue requested */
+            --bg-darker: #020617;
+            /* Darker shade for contrast */
+            --bg-card: #1e293b;
+            /* Card background */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #00ff88;
+            /* Neon Green */
+            --primary-hover: #00cc6a;
+            --danger: #ef4444;
+            /* Red for 'X' */
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --font-main: 'Inter', sans-serif;
+            --container-width: 1000px;
+            /* Optimized for reading */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.7;
+            /* Improved readability */
+            font-size: 18px;
+            /* Requested 18px */
+            overflow-x: hidden;
+        }
+
+        /* --- UTILITIES --- */
+        .container {
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-highlight {
+            color: var(--primary);
+        }
+
+        .text-red {
+            color: var(--danger);
+        }
+
+        h1,
+        h2,
+        h3 {
+            line-height: 1.2;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            letter-spacing: -0.5px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 36px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #020617;
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 255, 136, 0.4);
+        }
+
+        .pulse {
+            animation: pulse-animation 2s infinite;
+        }
+
+        @keyframes pulse-animation {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(0, 255, 136, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 136, 0);
+            }
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 80px 0;
+        }
+
+        /* 1. HERO SECTION */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            background: radial-gradient(circle at 50% 20%, #1e293b 0%, #0f172a 100%);
+            text-align: center;
+            padding-top: 120px;
+            /* Space for header if needed */
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-sub {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hero-mockup {
+            margin-top: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mockup-placeholder {
+            width: 280px;
+            height: 580px;
+            background: #020617;
+            border: 8px solid #334155;
+            border-radius: 40px;
+            margin: 0 auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .mockup-screen {
+            flex: 1;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #000;
+            box-shadow: 0 0 30px var(--primary);
+        }
+
+        /* 2. PROBLEM SECTION (Dark Grey) */
+        .problem-section {
+            background-color: #1e293b;
+            /* Dark Grey/Blue */
+        }
+
+        .problem-text {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* 3. THE GAP (Why it fails) */
+        .gap-section {
+            background-color: var(--bg-dark);
+        }
+
+        .gap-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gap-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .gap-icon {
+            font-size: 1.5rem;
+            color: var(--danger);
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        /* 4. SOLUTION (App Reveal) */
+        .solution-section {
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #172033 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle background glow */
+        .solution-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        /* 5. HOW IT WORKS (3 Steps) */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .step-card {
+            padding: 2rem;
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 6. FEATURES GRID */
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .check-icon {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* 7. SOCIAL PROOF - MASONRY & SCROLL */
+        .testimonials-grid {
+            column-count: 3;
+            column-gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            break-inside: avoid;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .stars {
+            color: #fbbf24;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
+        .author-info h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .author-info span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* 8. PRICING SECTION */
+        .pricing-section {
+            text-align: center;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            padding: 100px 0;
+            overflow: hidden;
+        }
+
+        .pricing-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3.5rem 2.5rem;
+            max-width: 550px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+
+            /* Scroll Reveal Initial State */
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            filter: blur(10px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .pricing-card.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* Pulsing Glow Behind Card */
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 50%;
+            animation: pulse-glow 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                opacity: 0.15;
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+
+            50% {
+                opacity: 0.25;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        .badge-authority {
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            color: #000;
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 8px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pricing-sub {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .price-display {
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .price-old {
+            text-decoration: line-through;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .price-new {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .value-stack {
+            text-align: left;
+            margin: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 0;
+        }
+
+        .value-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            color: #e2e8f0;
+        }
+
+        .value-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1.5rem;
+            opacity: 0.6;
+            font-size: 1.5rem;
+        }
+
+        /* Button Hover Upgrade */
+        .btn-pulse-hover:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.5);
+        }
+
+        /* 9. FAQ ACCORDION */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            margin-top: 3rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            color: #fff;
+            padding: 1.5rem 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            color: var(--text-muted);
+        }
+
+        .faq-answer p {
+            padding-bottom: 1.5rem;
+            margin-bottom: 0;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            /* Approximate max height */
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            color: var(--primary);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .hero {
+                padding-top: 80px;
+            }
+
+            .gap-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            /* Social Proof Mobile Scroll */
+            .testimonials-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                column-count: auto;
+                column-gap: 0;
+                gap: 1rem;
+                padding-bottom: 2rem;
+                /* Space for scrollbar */
+                margin: 0 -20px;
+                /* Negative margin to touch edges */
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .testimonial-card {
+                min-width: 280px;
+                scroll-snap-align: center;
+                margin-bottom: 0;
+            }
+
+            /* Hide scrollbar for cleaner look */
+            .testimonials-grid::-webkit-scrollbar {
+                display: none;
+            }
+
+            .testimonials-grid {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 1. HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up">
+                <h1>O PRIMEIRO APP DE <span class="text-highlight">"RESGATE DO SONO"</span> QUE FAZ SEU BEBÊ DORMIR EM
+                    ATÉ 10 MINUTOS</h1>
+                <p class="hero-sub">Mesmo durante Saltos de Desenvolvimento ou Regressão. Não é curso. É ferramenta de
+                    emergência.</p>
+
+                <a href="#pricing" class="btn btn-primary pulse">
+                    QUERO MEU ACESSO AGORA <i class="ri-arrow-right-line"></i>
+                </a>
+
+                <div class="hero-mockup">
+                    <div class="mockup-placeholder">
+                        <div class="mockup-screen">
+                            <div class="play-btn"><i class="ri-play-fill"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. PROBLEM SECTION (Dark Grey) -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="problem-text" data-aos="fade-up">
+                <h2 class="text-center">A Verdade Sobre a <span class="text-red">Exaustão</span></h2>
+                <p>São <strong>03:47 da manhã</strong>.</p>
+                <p>A casa está em silêncio, exceto pelo choro que parece perfurar sua alma. Seus olhos ardem como se
+                    tivessem areia. Seu corpo pesa uma tonelada.</p>
+                <p>Você já tentou de tudo: ninar, peito, balançar, passear pela casa... mas nada funciona. O bebê
+                    continua chorando, e você sente aquela mistura terrível de frustração, culpa e um cansaço que nunca
+                    vai embora.</p>
+                <p>Eles dizem: <em>"É só uma fase"</em>. Mas quando você está no olho do furacão, cada minuto parece uma
+                    eternidade.</p>
+                <p>Você não precisa de mais teorias. Você precisa de <strong>silêncio e paz</strong>. Agora.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. THE GAP (Why it fails) -->
+    <section class="gap-section">
+        <div class="container">
+            <div class="text-center" data-aos="fade-up">
+                <h2>Por que os "Cursos de Sono" <br>Falham na Madrugada?</h2>
+                <p>A indústria tradicional tenta te vender aulas longas quando você mal consegue manter os olhos
+                    abertos.</p>
+            </div>
+
+            <div class="gap-grid">
+                <div class="gap-card" data-aos="fade-right">
+                    <i class="ri-close-circle-fill gap-icon"></i>
+                    <div>
+                        <h3>Teoria vs. Prática</h3>
+                        <p>Cursos te dão 10 horas de vídeo. Às 3 da manhã, você não tem tempo de assistir aula. Você
+                            precisa de uma solução de um clique.</p>
+                    </div>
+                </div>
+                <div class="gap-card" data-aos="fade-left" data-aos-delay="100">
+                    <i class="ri-close-circle-fill gap-icon"></i>
+                    <div>
+                        <h3>Informação Genérica</h3>
+                        <p>Dicas de "rotina perfeita" não funcionam quando seu bebê está no meio de um Salto de
+                            Desenvolvimento ou Regressão.</p>
+                    </div>
+                </div>
+                <div class="gap-card" data-aos="fade-right" data-aos-delay="200">
+                    <i class="ri-close-circle-fill gap-icon"></i>
+                    <div>
+                        <h3>Custo Elevado</h3>
+                        <p>Consultoras de sono cobram R$ 500, R$ 1.000 ou mais por conselhos que muitas vezes não se
+                            aplicam à sua realidade imediata.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. THE SOLUTION (App Reveal) -->
+    <section class="solution-section">
+        <div class="solution-glow"></div>
+        <div class="container text-center">
+            <div data-aos="zoom-in">
+                <p class="text-highlight" style="text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">
+                    Apresentando a Nova Era</p>
+                <h2>Protocolo Resgate (APP)</h2>
+                <p style="max-width: 600px; margin: 0 auto 2rem;">A primeira ferramenta digital desenhada
+                    especificamente para situações de emergência noturna.</p>
+
+                <div
+                    style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px; display: inline-block; border: 1px solid rgba(255,255,255,0.1);">
+                    <i class="ri-smartphone-line" style="font-size: 4rem; color: var(--primary);"></i>
+                    <p style="margin-bottom: 0; margin-top: 1rem;">Disponível em Web App</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. HOW IT WORKS (3 Steps) -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="text-center">Como Funciona em 3 Passos</h2>
+
+            <div class="steps-grid">
+                <div class="step-card" data-aos="fade-up">
+                    <div class="step-icon"><i class="ri-stethoscope-line"></i></div>
+                    <h3>1. Diagnóstico</h3>
+                    <p>Abra o app e identifique rapidamente o motivo do choro (Fome? Sono? Cólica?) com nosso guia
+                        visual rápido.</p>
+                </div>
+
+                <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-icon"><i class="ri-play-circle-line"></i></div>
+                    <h3>2. Ferramenta</h3>
+                    <p>Selecione o "Som de Resgate" específico para a idade do seu bebê (Ruído Branco, Útero, Chuva).
+                    </p>
+                </div>
+
+                <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-icon"><i class="ri-zzz-line"></i></div>
+                    <h3>3. Resgate</h3>
+                    <p>Siga a instrução de ninar guiada enquanto o áudio toca. O bebê acalma e dorme em minutos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FEATURES GRID -->
+    <section class="features-section" style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="text-center">O Que Você Recebe</h2>
+
+            <div class="features-list">
+                <div class="feature-item">
+                    <i class="ri-checkbox-circle-fill check-icon"></i>
+                    <span>Player de Ruído Branco Premium</span>
+                </div>
+                <div class="feature-item">
+                    <i class="ri-checkbox-circle-fill check-icon"></i>
+                    <span>Guia de Saltos de Desenvolvimento</span>
+                </div>
+                <div class="feature-item">
+                    <i class="ri-checkbox-circle-fill check-icon"></i>
+                    <span>Calculadora de Janelas de Sono</span>
+                </div>
+                <div class="feature-item">
+                    <i class="ri-checkbox-circle-fill check-icon"></i>
+                    <span>Checklist de Higiene do Sono</span>
+                </div>
+                <div class="feature-item">
+                    <i class="ri-checkbox-circle-fill check-icon"></i>
+                    <span>Técnicas de Ninar de Emergência</span>
+                </div>
+                <div class="feature-item">
+                    <i class="ri-checkbox-circle-fill check-icon"></i>
+                    <span>Acesso Vitalício e Imediato</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. SOCIAL PROOF (MASONRY/SCROLL) -->
+    <section class="social-proof">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 3rem;">
+                <h2>Mães Reais, <span class="text-highlight">Noites Reais</span></h2>
+                <p>Veja o que está acontecendo nos grupos de mães agora:</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <!-- DEP 1 - O Cético -->
+                <div class="testimonial-card">
+                    <div class="stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
+                            class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div>
+                    <p class="testimonial-text">"Eu pagaria R$ 1.000 por isso fácil. O botão SOS me salvou na primeira
+                        noite. Meu filho de 4 meses dormiu em 8 minutos cronometrados."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Amanda" class="author-img">
+                        <div class="author-info">
+                            <h4>Amanda S.</h4>
+                            <span>Mãe de 4 meses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEP 2 - O Fã do Player -->
+                <div class="testimonial-card">
+                    <div class="stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
+                            class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div>
+                    <p class="testimonial-text">"Achava que era papo de vendedor, mas o Ruído Branco desse app é
+                        diferente. É mágico. Ele apaga assim que eu ligo."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Júlia" class="author-img">
+                        <div class="author-info">
+                            <h4>Júlia M.</h4>
+                            <span>Mãe de 2 meses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEP 3 - A Técnica -->
+                <div class="testimonial-card">
+                    <div class="stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
+                            class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div>
+                    <p class="testimonial-text">"O guia de janelas de sono me mostrou que eu deixava ele acordado
+                        demais. Ajustei a rotina e as crises de choro acabaram em 2 dias."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Carla" class="author-img">
+                        <div class="author-info">
+                            <h4>Carla F.</h4>
+                            <span>Mãe de 6 meses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEP 4 - A Prática -->
+                <div class="testimonial-card">
+                    <div class="stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
+                            class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div>
+                    <p class="testimonial-text">"Melhor R$ 27 que já gastei. É direto ao ponto. De madrugada a gente não
+                        quer ler teoria, quer solução rápida."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Patrícia" class="author-img">
+                        <div class="author-info">
+                            <h4>Patrícia R.</h4>
+                            <span>Mãe de 3 meses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEP 5 - O Pai -->
+                <div class="testimonial-card">
+                    <div class="stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
+                            class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div>
+                    <p class="testimonial-text">"Comprei pra minha esposa que estava zumbi. Ontem foi a primeira noite
+                        que dormimos 6 horas seguidas em meses. Obrigado!"</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Roberto" class="author-img">
+                        <div class="author-info">
+                            <h4>Roberto D.</h4>
+                            <span>Pai de 1 mês</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEP 6 - A Economista -->
+                <div class="testimonial-card">
+                    <div class="stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
+                            class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div>
+                    <p class="testimonial-text">"Já tinha gasto R$ 1.500 em consultoria e nada. Esse app de R$ 27
+                        resolveu o que a consultora não conseguiu. Inacreditável."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/91.jpg" alt="Fernanda" class="author-img">
+                        <div class="author-info">
+                            <h4>Fernanda T.</h4>
+                            <span>Mãe de 5 meses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEP 7 - A Mãe do Salto -->
+                <div class="testimonial-card">
+                    <div class="stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
+                            class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div>
+                    <p class="testimonial-text">"O Salto dos 4 meses estava sendo um inferno. O 'Detector de Saltos' me
+                        acalmou e a técnica do reset funcionou na hora."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="Beatriz" class="author-img">
+                        <div class="author-info">
+                            <h4>Beatriz L.</h4>
+                            <span>Mãe de 4 meses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEP 8 - A UX -->
+                <div class="testimonial-card">
+                    <div class="stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
+                            class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div>
+                    <p class="testimonial-text">"Amei que dá pra usar com uma mão só e o fundo escuro não desperta o
+                        bebê. Pensaram em tudo."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/54.jpg" alt="Larissa" class="author-img">
+                        <div class="author-info">
+                            <h4>Larissa B.</h4>
+                            <span>Mãe de 1 mês</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEP 9 - A Desesperada -->
+                <div class="testimonial-card">
+                    <div class="stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
+                            class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div>
+                    <p class="testimonial-text">"Eu estava chorando junto com meu bebê. O botão SOS me deu o passo a
+                        passo e a gente conseguiu se acalmar. Gratidão eterna."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Mariana" class="author-img">
+                        <div class="author-info">
+                            <h4>Mariana C.</h4>
+                            <span>Mãe de 2 semanas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEP 10 - O Presente -->
+                <div class="testimonial-card">
+                    <div class="stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
+                            class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div>
+                    <p class="testimonial-text">"Dei de presente pra minha irmã no chá de bebê. Ela disse que foi o item
+                        mais útil que ganhou, mais que as fraldas!"</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/76.jpg" alt="Camila" class="author-img">
+                        <div class="author-info">
+                            <h4>Camila P.</h4>
+                            <span>Tia Coruja</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. PRICING SECTION -->
+    <!-- 8. PRICING SECTION - AUTHORITY CARD -->
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <!-- The card itself has the scroll-reveal class for JS observation -->
+            <div class="pricing-card scroll-reveal">
+                <div class="badge-authority">
+                    <i class="ri-star-fill"></i> Escolha Nº 1 das Mães
+                </div>
+
+                <h3>Desbloqueie o Sono da Sua Família Hoje</h3>
+                <p class="pricing-sub">Junte-se a mais de 1.430 pais que voltaram a dormir.</p>
+
+                <div class="price-display">
+                    <span class="price-old">De R$ 97,00</span>
+                    <div class="price-new">R$ 27,90</div>
+                    <span
+                        style="color: var(--primary); font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-top: 10px; display: block;">Pagamento
+                        Único • Acesso Vitalício</span>
+                </div>
+
+                <div class="value-stack">
+                    <div class="value-item"><i class="ri-checkbox-circle-fill"></i> <span>App Protocolo Resgate
+                            (Web)</span></div>
+                    <div class="value-item"><i class="ri-checkbox-circle-fill"></i> <span>Botão SOS Choro
+                            (Diagnóstico)</span></div>
+                    <div class="value-item"><i class="ri-checkbox-circle-fill"></i> <span>Player de Ruído Branco
+                            Premium</span></div>
+                    <div class="value-item"><i class="ri-checkbox-circle-fill"></i> <span><strong>BÔNUS:</strong> Guia
+                            de Saltos</span></div>
+                </div>
+
+                <a href="#" class="btn btn-primary btn-pulse-hover pulse" style="width: 100%;">
+                    QUERO MEU ACESSO AGORA
+                </a>
+
+                <div class="payment-icons">
+                    <i class="ri-visa-line"></i>
+                    <i class="ri-mastercard-line"></i>
+                    <i class="ri-qr-code-line"></i> <!-- Pix representation -->
+                </div>
+
+                <p style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.6;">
+                    <i class="ri-lock-2-line"></i> Ambiente 100% Seguro
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. FAQ ACCORDION -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="text-center">Perguntas Frequentes</h2>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Funciona para recém-nascidos?
+                        <i class="ri-arrow-down-s-line faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sim! O Protocolo Resgate foi desenhado pensando principalmente nos primeiros 12 meses de
+                            vida, onde a necessidade de ruído branco e simulação do útero é maior.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        É uma assinatura mensal?
+                        <i class="ri-arrow-down-s-line faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Não. O pagamento é único. Você paga R$ 27,90 uma vez e tem acesso vitalício ao aplicativo e
+                            todas as suas atualizações futuras.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Como recebo o acesso?
+                        <i class="ri-arrow-down-s-line faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Imediatamente após a confirmação do pagamento, você receberá um e-mail com seu login e senha
+                            para acessar a área exclusiva do aplicativo.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        E se não funcionar para o meu bebê?
+                        <i class="ri-arrow-down-s-line faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nós oferecemos uma garantia de 7 dias. Se você usar as ferramentas e não sentir diferença na
+                            qualidade do sono, nós devolvemos 100% do seu dinheiro.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. FOOTER -->
+    <footer>
+        <div class="container">
+            <div style="margin-bottom: 1.5rem;">
+                <a href="#">Termos de Uso</a> •
+                <a href="#">Política de Privacidade</a> •
+                <a href="#">Contato</a>
+            </div>
+            <p>&copy; 2023 Protocolo Resgate. Todos os direitos reservados.</p>
+            <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 1rem;">Este site não tem vínculo com o Facebook,
+                Instagram ou Meta Inc.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            once: true,
+            offset: 100,
+            duration: 800,
+            easing: 'ease-out-cubic'
+        });
+
+        // FAQ Accordion Logic
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+
+            question.addEventListener('click', () => {
+                // Close other open items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+
+        // --- ADVANCED SCROLL REVEAL (PRICING) ---
+        document.addEventListener("DOMContentLoaded", function () {
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.15 // Trigger when 15% of the element is visible
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Entered Viewport
+                        entry.target.classList.add('active');
+                    } else {
+                        // Left Viewport (Exit Animation)
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, observerOptions);
+
+            const scrollElements = document.querySelectorAll('.scroll-reveal');
+            scrollElements.forEach((el) => observer.observe(el));
+        });
+    </script>
+</body>
+
+</html>
